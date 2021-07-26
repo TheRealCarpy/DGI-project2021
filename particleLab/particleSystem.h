@@ -51,6 +51,8 @@ struct Particle
     MyVector  m_vCurPos;    // Current position of particle
     MyVector  m_vCurVel;    // Current velocity of particle
     float     m_fInitTime;  // Time of creation of particle
+    MyVector m_color;
+    float m_lifespan;
 
     Particle *m_pNext;      // Next particle in list
 };

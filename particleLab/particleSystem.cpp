@@ -391,7 +391,9 @@ int CParticleSystem::Update( FLOAT fElpasedTime )
 
             // END Plane Checking
             //-----------------------------------------------------------------
-
+            // particle color based on z position, the higher z från the camera, the lower intensity
+            //float dist;
+            //pParticle->m_color = MyVector(1.0f, 1.0f, 1.0f);
             ppParticle = &pParticle->m_pNext;
         }
     }

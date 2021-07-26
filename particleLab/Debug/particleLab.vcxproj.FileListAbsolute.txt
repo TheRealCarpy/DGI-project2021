@@ -1,1 +1,2 @@
 D:\projects\animation-lab-2\particleLab\Debug\ParticleLab.exe
+D:\ronya\GIT\DGI-project2021\particleLab\Debug\ParticleLab.exe
