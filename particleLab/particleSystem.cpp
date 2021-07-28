@@ -326,7 +326,7 @@ int CParticleSystem::Update( FLOAT fElpasedTime )
 
             // Finally, update position with respect to velocity
             vOldPosition = pParticle->m_vCurPos;
-            pParticle->m_vCurPos += pParticle->m_vCurVel * fElpasedTime;
+            pParticle->m_vCurPos += pParticle->m_vCurVel * pParticle->m_weight * fElpasedTime;
 
             //-----------------------------------------------------------------
             // BEGIN Checking the particle against each plane that was set up
@@ -441,6 +441,7 @@ int CParticleSystem::Update( FLOAT fElpasedTime )
                 
                 // Set the attributes for our new particle...
                 pParticle->m_vCurVel = m_vVelocity;
+                pParticle->m_weight = getRandomMinMax(0.1, 2); //Set weight, needs to go random from 0.1 to 2
 
                 if( m_fVelocityVar != 0.0f )
                 {
@@ -638,5 +639,4 @@ void CParticleSystem::Render_planes() {
 	glVertex3f(-3, 0, 3);
 	glEnd();
 	glPopMatrix();
-
 }

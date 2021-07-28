@@ -136,6 +136,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="boltzmann.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="myMatrix.cpp" />
     <ClCompile Include="myQuat.cpp" />
@@ -145,6 +146,7 @@
     <ClCompile Include="tgaloader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="boltzmann.h" />
     <ClInclude Include="glext.h" />
     <ClInclude Include="include\gl\GLAUX.H" />
     <ClInclude Include="include\gl\glut.h" />

@@ -36,6 +36,9 @@
     <ClCompile Include="tgaloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="boltzmann.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="glext.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gl\glut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="boltzmann.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

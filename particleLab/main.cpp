@@ -183,7 +183,7 @@ void key(unsigned char k, int x, int y)
 	case '4':
 		g_nActiveSystem = 3;
 		break;
-	case '5':
+	case '5':8
 		g_nActiveSystem = 4;
 		break;
 	case '6':
@@ -428,7 +428,7 @@ void initParticles( void )
 	g_pParticleSystems[6]->SetNumToRelease(5);
 	g_pParticleSystems[6]->SetReleaseInterval(0.02f);
 	g_pParticleSystems[6]->SetLifeCycle(3.0f);
-	g_pParticleSystems[6]->SetSize(10.0f);
+	g_pParticleSystems[6]->SetSize(5.0f);
 	g_pParticleSystems[6]->SetColor(MyVector(1.0f, 1.0f, 1.0f));
 
 	g_pParticleSystems[6]->SetPosition(MyVector(0.0f, -5.0f, 0.0f));
