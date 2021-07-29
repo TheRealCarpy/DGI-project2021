@@ -73,6 +73,20 @@ MyVector MyVector::getCrossProduct(const MyVector &other) const
 	return result;
 }
 
+float MyVector::getDistance(const MyVector& other) const
+{
+    float result;
+    result = sqrt(pow((this->x - other.x), 2) + pow((this->y - other.y), 2) + pow((this->z - other.z), 2));
+    return result;
+}
+
+float MyVector::getDistanceXZ(const MyVector& other) const
+{
+    float result;
+    result = sqrt(pow((this->x - other.x), 2) + pow((this->z - other.z), 2));
+    return result;
+}
+
 MyVector MyVector::operator + ( const MyVector &other )
 {
     MyVector vResult(0.0f, 0.0f, 0.0f);

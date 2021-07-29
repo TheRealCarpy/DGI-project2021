@@ -31,6 +31,9 @@
 PFNGLPOINTPARAMETERFARBPROC  glPointParameterfARB  = NULL;
 PFNGLPOINTPARAMETERFVARBPROC glPointParameterfvARB = NULL;
 
+float getAlpha(Particle*);
+float getSize(Particle*);
+
 //-----------------------------------------------------------------------------
 // Name: getRandomMinMax()
 // Desc: Gets a random number between min/max boundaries
@@ -442,6 +445,7 @@ int CParticleSystem::Update( FLOAT fElpasedTime )
                 // Set the attributes for our new particle...
                 pParticle->m_vCurVel = m_vVelocity;
                 pParticle->m_weight = getRandomMinMax(0.1, 2); //Set weight, needs to go random from 0.1 to 2
+                pParticle->m_size = getRandomMinMax(10, 100);
 
                 if( m_fVelocityVar != 0.0f )
                 {
@@ -450,7 +454,7 @@ int CParticleSystem::Update( FLOAT fElpasedTime )
                 }
 
                 pParticle->m_fInitTime  = m_fCurrentTime;
-                pParticle->m_vCurPos    = m_vPosition;
+                pParticle->m_vCurPos    = MyVector(getRandomMinMax(-5,5),m_vPosition.y, getRandomMinMax(-5, 5));
                 
                 ++m_dwActiveCount;
             }
@@ -540,6 +544,8 @@ void CParticleSystem::Render( void )
 			glVertex3f( pParticle->m_vCurPos.x,
 					    pParticle->m_vCurPos.y,
 					    pParticle->m_vCurPos.z );
+            glColor4f(m_clrColor.x, m_clrColor.y, m_clrColor.z, getAlpha(pParticle));
+            glPointSize(getSize(pParticle));
 
 			pParticle = pParticle->m_pNext;
 		}
@@ -565,6 +571,8 @@ void CParticleSystem::RenderSimple( void )
 			glVertex3f( pParticle->m_vCurPos.x,
 					    pParticle->m_vCurPos.y,
 					    pParticle->m_vCurPos.z );
+            glColor4f(m_clrColor.x, m_clrColor.y, m_clrColor.z, getAlpha(pParticle));
+            glPointSize(getSize(pParticle));
 
 			pParticle = pParticle->m_pNext;
 		}
@@ -640,3 +648,28 @@ void CParticleSystem::Render_planes() {
 	glEnd();
 	glPopMatrix();
 }
+
+float getAlpha(Particle* p)
+{
+    float distance = p->m_vCurPos.getDistanceXZ(MyVector(0,0,0));
+    
+    if (distance == 0)
+    {
+        return 1.0;
+    }
+    else
+    {
+        return 1.0/distance;
+    }
+}
+
+float getSize(Particle* p) {
+    float distance = p->m_vCurPos.getDistanceXZ(MyVector(0, 0, 0));
+    if (distance <= 5) {
+        return p->m_size - distance;
+    }
+    else {
+        return p->m_size + distance;
+    }
+}
+

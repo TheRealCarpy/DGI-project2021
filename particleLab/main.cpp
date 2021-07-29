@@ -88,6 +88,10 @@ void draw(void)
   glPushMatrix();
   glTranslatef(0.0,0.0,-2.0); //move the camera back to view the scene
   glRotatef(rotation_value % 360 , 0.0, 1.0, 0.0); //Rotate the camera
+  if (g_nActiveSystem == 6) {
+    glRotatef(180, 1.0, 0.0, 0.0);
+  }
+  
   //
 	// Enabling GL_DEPTH_TEST and setting glDepthMask to GL_FALSE makes the 
     // Z-Buffer read-only, which helps remove graphical artifacts generated 
@@ -174,7 +178,7 @@ void key(unsigned char k, int x, int y)
 	case '1':
 		g_nActiveSystem = 6;
 	  break;
-	/*case '2':
+	case '2':
 		g_nActiveSystem = 1;
 	  break;
 	case '3':
@@ -183,7 +187,7 @@ void key(unsigned char k, int x, int y)
 	case '4':
 		g_nActiveSystem = 3;
 		break;
-	case '5':8
+	case '5':
 		g_nActiveSystem = 4;
 		break;
 	case '6':
@@ -191,12 +195,22 @@ void key(unsigned char k, int x, int y)
 		break;
 	case '7':
 		g_nActiveSystem = 0;
-		break;*/
-    case '8':
-        rotation_value -= 10;
+		break;
+    case 'a':
+        rotation_value -= 4;
         break;
-    case '9':
-        rotation_value += 10;
+    case 'd':
+        rotation_value += 4;
+        break;
+    case 'w':
+        if(g_pParticleSystems[g_nActiveSystem]->GetNumToRelease() <= g_pParticleSystems[g_nActiveSystem]->GetMaxParticles()/20)
+        g_pParticleSystems[g_nActiveSystem]->SetNumToRelease(g_pParticleSystems[g_nActiveSystem]->GetNumToRelease() + 2);
+        break;
+    case 's':
+        if (g_pParticleSystems[g_nActiveSystem]->GetNumToRelease() >= 2) {
+            g_pParticleSystems[g_nActiveSystem]->SetNumToRelease(g_pParticleSystems[g_nActiveSystem]->GetNumToRelease() - 2);
+        }
+        break;
     case 27: //27 is the ASCII code for the ESCAPE key
       exit(0);
       break;
@@ -268,7 +282,7 @@ void initParticles( void )
     // Exploding burst
 	//
     
-    /*g_pParticleSystems[0] = new CParticleSystem();
+    g_pParticleSystems[0] = new CParticleSystem();
 
     //g_pParticleSystems[0]->SetTexture( "..\\particle.bmp" );
 	g_pParticleSystems[0]->SetTexture( "particle.bmp" );
@@ -420,15 +434,15 @@ void initParticles( void )
     g_pParticleSystems[5]->SetCollisionPlane( MyVector( 0.0f,-1.0f, 0.0f ), 
                                           MyVector( 0.0f, 5.0f, 0.0f ) ); // Ceiling
 
-    g_pParticleSystems[5]->Init();*/
+    g_pParticleSystems[5]->Init();
 
 	g_pParticleSystems[6] = new CParticleSystem();
 	g_pParticleSystems[6]->SetTexture("particle.bmp");
-	g_pParticleSystems[6]->SetMaxParticles(2000);
+	g_pParticleSystems[6]->SetMaxParticles(50000);
 	g_pParticleSystems[6]->SetNumToRelease(5);
 	g_pParticleSystems[6]->SetReleaseInterval(0.02f);
-	g_pParticleSystems[6]->SetLifeCycle(3.0f);
-	g_pParticleSystems[6]->SetSize(5.0f);
+	g_pParticleSystems[6]->SetLifeCycle(20.0f);
+	g_pParticleSystems[6]->SetSize(10.0f);
 	g_pParticleSystems[6]->SetColor(MyVector(1.0f, 1.0f, 1.0f));
 
 	g_pParticleSystems[6]->SetPosition(MyVector(0.0f, -5.0f, 0.0f));
@@ -440,10 +454,10 @@ void initParticles( void )
 
 	g_pParticleSystems[6]->SetVelocityVar(2.0f);
 
-	g_pParticleSystems[6]->SetCollisionPlane(MyVector(0.0f, -4.0f, 0.0f),
+	/*g_pParticleSystems[6]->SetCollisionPlane(MyVector(0.0f, -4.0f, 0.0f),
 		MyVector(0.0f, 0.0f, 0.0f)); // Floor
 
-	/*g_pParticleSystems[6]->SetCollisionPlane(MyVector(1.0f, 0.0f, 0.0f),
+	g_pParticleSystems[6]->SetCollisionPlane(MyVector(1.0f, 0.0f, 0.0f),
 		MyVector(-3.0f, 0.0f, 0.0f)); // Left Wall
 
 	g_pParticleSystems[6]->SetCollisionPlane(MyVector(-1.0f, 0.0f, 0.0f),

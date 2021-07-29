@@ -41,6 +41,8 @@ class MyVector
 		
 		float getDotProduct(const MyVector &other) const;
 		MyVector getCrossProduct(const MyVector &other) const;
+		float getDistance(const MyVector& other) const;
+		float getDistanceXZ(const MyVector& other) const;
 		
 		void normalise(void);		
 
