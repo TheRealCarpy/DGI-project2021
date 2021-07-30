@@ -165,7 +165,6 @@
     <Library Include="libs\glut32.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="particle.bmp" />
     <Image Include="pngegg.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

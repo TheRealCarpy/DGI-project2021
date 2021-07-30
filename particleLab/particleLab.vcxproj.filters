@@ -80,9 +80,6 @@
     <Library Include="libs\glut32.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="particle.bmp">
-      <Filter>Source Files\Resource Files</Filter>
-    </Image>
     <Image Include="pngegg.bmp">
       <Filter>Source Files\Resource Files</Filter>
     </Image>

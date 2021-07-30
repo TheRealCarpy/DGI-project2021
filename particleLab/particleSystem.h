@@ -52,7 +52,7 @@ struct Particle
     MyVector  m_vCurVel;    // Current velocity of particle
     float     m_weight;
     float     m_fInitTime;  // Time of creation of particle
-    float m_lifespan;
+    float m_alpha;
     float m_size;
 
     Particle *m_pNext;      // Next particle in list

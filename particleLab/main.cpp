@@ -442,7 +442,7 @@ void initParticles( void )
 	g_pParticleSystems[6]->SetNumToRelease(5);
 	g_pParticleSystems[6]->SetReleaseInterval(0.02f);
 	g_pParticleSystems[6]->SetLifeCycle(20.0f);
-	g_pParticleSystems[6]->SetSize(10.0f);
+	g_pParticleSystems[6]->SetSize(20.0f);
 	g_pParticleSystems[6]->SetColor(MyVector(1.0f, 1.0f, 1.0f));
 
 	g_pParticleSystems[6]->SetPosition(MyVector(0.0f, -5.0f, 0.0f));
