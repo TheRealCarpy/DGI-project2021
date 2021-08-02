@@ -447,9 +447,8 @@ int CParticleSystem::Update(FLOAT fElpasedTime)
 
                 // Set the attributes for our new particle...
                 pParticle->m_vCurVel = m_vVelocity;
-                pParticle->m_weight = getRandomMinMax(0.1, 2); //Set weight, needs to go random from 0.1 to 2
-                pParticle->m_size = getRandomMinMax(10, 100);
-
+                pParticle->m_size = this->m_fSize + getRandomMinMax(-10, 10);
+                pParticle->m_weight = pParticle->m_size/this->m_fSize * getRandomMinMax(0.1, 1); //Set weight, needs to go random from 0.1 to 2
                 if (m_fVelocityVar != 0.0f)
                 {
                     MyVector vRandomVec = getRandomVector();
@@ -663,7 +662,7 @@ void setAlpha(Particle* p, float time_left)
     }
     else
     {
-        p->m_alpha = 1.0/distance;
+        p->m_alpha = 1.0/distance/5;
     }
 }
 /*
