@@ -116,6 +116,9 @@ public:
     void SetCollisionPlane( MyVector vPlaneNormal, MyVector vPoint, 
                             float fBounceFactor = 1.0f, int nCollisionResult = CR_BOUNCE );
 
+    void setAlpha(Particle* p, float time_left);
+    float getSize(Particle*);
+
     int Init( void );
     int Update( float fElapsedTime );
     void Render( void );

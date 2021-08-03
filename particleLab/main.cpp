@@ -87,7 +87,7 @@ void draw(void)
 
   glPushMatrix();
   glTranslatef(0.0,0.0,-2.0); //move the camera back to view the scene
-  glRotatef(rotation_value % 360 , 0.0, 1.0, 0.0); //Rotate the camera
+  glRotatef(rotation_value, 0.0, 1.0, 0.0); //Rotate the camera
   if (g_nActiveSystem == 6) {
     glRotatef(180, 1.0, 0.0, 0.0);
   }
@@ -105,6 +105,7 @@ void draw(void)
 
 	glEnable( GL_DEPTH_TEST );
     glDepthMask( GL_FALSE );
+    //glEnable(GL_PROGRAM_POINT_SIZE);
 
     //
 	// Render particle system
@@ -197,10 +198,10 @@ void key(unsigned char k, int x, int y)
 		g_nActiveSystem = 0;
 		break;
     case 'a':
-        rotation_value -= 4;
+        rotation_value -= 2;
         break;
     case 'd':
-        rotation_value += 4;
+        rotation_value += 2;
         break;
     case 'w':
         if(g_pParticleSystems[g_nActiveSystem]->GetNumToRelease() <= g_pParticleSystems[g_nActiveSystem]->GetMaxParticles()/20)
@@ -231,7 +232,7 @@ void reshape(int width, int height)
   //gluPerspective(45.0, (float) width / (float) height, 1.0, 100.0);
   
   //here we use an orthogonal projection
-  glOrtho(-5.0, 5.0, -5.0, 5.0, 0.1, 5.0);
+  glOrtho(-5.0, 5.0, -5.0, 5.0, -10.0, 10.0);
   //redraw the view during resizing
   draw();
 }
@@ -441,8 +442,8 @@ void initParticles( void )
 	g_pParticleSystems[6]->SetMaxParticles(50000);
 	g_pParticleSystems[6]->SetNumToRelease(5);
 	g_pParticleSystems[6]->SetReleaseInterval(0.02f);
-	g_pParticleSystems[6]->SetLifeCycle(20.0f);
-	g_pParticleSystems[6]->SetSize(30.0f);
+	g_pParticleSystems[6]->SetLifeCycle(10.0f);
+	g_pParticleSystems[6]->SetSize(20.0f);
 	g_pParticleSystems[6]->SetColor(MyVector(1.0f, 1.0f, 1.0f));
 
 	g_pParticleSystems[6]->SetPosition(MyVector(0.0f, -5.0f, 0.0f));

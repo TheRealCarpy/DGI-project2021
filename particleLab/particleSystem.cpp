@@ -31,8 +31,6 @@
 PFNGLPOINTPARAMETERFARBPROC  glPointParameterfARB = NULL;
 PFNGLPOINTPARAMETERFVARBPROC glPointParameterfvARB = NULL;
 
-void setAlpha(Particle*, float);
-float getSize(Particle*);
 
 //-----------------------------------------------------------------------------
 // Name: getRandomMinMax()
@@ -447,7 +445,7 @@ int CParticleSystem::Update(FLOAT fElpasedTime)
 
                 // Set the attributes for our new particle...
                 pParticle->m_vCurVel = m_vVelocity;
-                pParticle->m_size = this->m_fSize + getRandomMinMax(-10, 10);
+                pParticle->m_size = this->m_fSize + getRandomMinMax(-5, 5);
                 pParticle->m_weight = pParticle->m_size/this->m_fSize * getRandomMinMax(0.1, 1); //Set weight, needs to go random from 0.1 to 2
                 if (m_fVelocityVar != 0.0f)
                 {
@@ -534,28 +532,37 @@ void CParticleSystem::Render(void)
         glDisable(GL_POINT_SPRITE_ARB);
     }
     else glEnable(GL_POINT_SPRITE_ARB);
-
-    glPointSize(m_fSize);
-
+    
+    
+    //glPointSize(pParticle->m_size);
+    //glPointSize(30);
+    
     glColor3f(m_clrColor.x, m_clrColor.y, m_clrColor.z);
 
-    glBegin(GL_POINTS);
-    {
-        // Render each particle...
-        while (pParticle)
+    //glPointSize(getSize(pParticle));
+    while (pParticle){   
+        glPointSize(pParticle->m_size);
+        glBegin(GL_POINTS);
         {
+        // Render each particle...
+        
+            glClear(GL_COLOR_BUFFER_BIT);
             glVertex3f(pParticle->m_vCurPos.x,
                 pParticle->m_vCurPos.y,
                 pParticle->m_vCurPos.z);
             setAlpha(pParticle, m_fLifeCycle - m_fCurrentTime - pParticle->m_fInitTime);
             glColor4f(m_clrColor.x, m_clrColor.y, m_clrColor.z, pParticle->m_alpha);
-            glPointSize(getSize(pParticle));
+            //glScalef(pParticle->m_size, pParticle->m_size, pParticle->m_size);
+            
 
-            pParticle = pParticle->m_pNext;
+            
         }
+        glEnd();
+        pParticle = pParticle->m_pNext;
     }
-    glEnd();
+    
     glDisable(GL_POINT_SPRITE_ARB);
+    //glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void CParticleSystem::RenderSimple(void)
@@ -653,34 +660,38 @@ void CParticleSystem::Render_planes() {
     glPopMatrix();
 }
 //REAL
-void setAlpha(Particle* p, float time_left)
+void CParticleSystem::setAlpha(Particle* p, float timeleft)
 {
-    float distance = p->m_vCurPos.getDistanceXZ(MyVector(0,0,0));
-    if (distance == 0)
-    {
-        p->m_alpha = 1.0;
-    }
-    else
-    {
-        p->m_alpha = 1.0/distance/5;
-    }
-}
-/*
-//DEBUG
-void setAlpha(Particle* p, float m_fLifeCycle, float fTimePassed)
-{
-    if (fTimePassed > 0.5 * m_fLifeCycle) {
+    MyMatrix m[16];
+    m->getGLModelviewMatrix();
+    MyVector eye_coord = m->multiply_vector(m_vPosition);
+    float distance = p->m_vCurPos.getDistanceXZ(eye_coord);
+
+    if (timeleft > 0.5 * m_fLifeCycle) {
         p->m_alpha *= 0.5;
     }
     else {
-        //printf("\n %lf", p->m_alpha);
-        p->m_alpha = 1;
+        if (distance == 0)
+        {
+            p->m_alpha = 1.0;
+        }
+        else
+        {
+            p->m_alpha = 1.0 / distance;
+        }
     }
-}*/
+}
 
-float getSize(Particle* p) {
-    float distance = p->m_vCurPos.getDistanceXZ(MyVector(0, 0, 0));
+float CParticleSystem::getSize(Particle* p) {
+    MyMatrix m[16];
+    m->getGLModelviewMatrix();
+    MyVector eye_coord = m->multiply_vector(m_vPosition);
+    float distance = p->m_vCurPos.getDistanceXZ(eye_coord);
     if (distance <= 5) {
+        if(p->m_size - distance <= 0)
+        {
+            return p->m_size = 0;
+        }
         return p->m_size - distance;
     }
     else {

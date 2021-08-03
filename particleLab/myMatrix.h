@@ -10,6 +10,7 @@
 #include <gl/gl.h>            // standard OpenGL include
 #include <gl/glu.h>           // OpenGL utilties
 #include <glut.h>             // OpenGL utilties
+#include "myVector.h"
 
 
 class MyMatrix
@@ -26,6 +27,9 @@ class MyMatrix
 		void multiplyGLMatrix(void);
 		void setGLMatrix(void);
 		void set_element(int i, float v);
+		void translate(float tx, float ty);
+		void rotate(float angle);
+		MyVector multiply_vector(const MyVector v);
 
 	
 	private:
